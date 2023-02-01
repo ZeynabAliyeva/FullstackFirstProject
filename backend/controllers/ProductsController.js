@@ -1,6 +1,7 @@
 const { product } = require("../models/ Product");
 
 const productController = {
+    //get
     getAll: (req,res) =>{
         product.find({},(err,docs)=>{
             if (!err) {
@@ -29,6 +30,7 @@ const productController = {
             }
         })
     },
+    //get
     getByID: (req, res)=>{
         let id = req.params.id; //serach
         product.findById(id,(err,docs)=>{
@@ -40,6 +42,7 @@ const productController = {
                 res.status(500).json(err);
             }})
     },
+    //delete
     delete: (req, res)=>{
         let id = req.params.id; //serach
         product.findByIdAndDelete(id,(err,docs)=>{
@@ -72,4 +75,7 @@ const productController = {
     },
 
 
+}
+module.exports = {
+    productController
 }
