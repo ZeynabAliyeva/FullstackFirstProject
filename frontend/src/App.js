@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios';
+import { useQuery } from 'react-query';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+	const { data, isLoading } = useQuery('categories', () => {
+		return axios.get('http://localhost:8080/products').then((res) => res.data);
+	});
+
+	if (isLoading) return <h1>loading ...</h1>;
+
+	return (
+		<table className="w3-table-all">
+			<thead className="w3-light-grey">
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+          <th>Date</th>
+				</tr>
+        
+			</thead>
+			<tbody>
+				{data?.map((product) => (
+					<tr key={product.id}>
+						<td>{product.name}</td>
+						<td>{product.description}</td>
+            <td>{product.date}</td>
+					</tr>
+				))}
+			</tbody>
+		</table>
+	);
+};
+
+
 
 export default App;
+
